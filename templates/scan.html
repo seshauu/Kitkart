@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit RFID Records</title>
+</head>
+<body>
+    <h1>Edit RFID Records</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <table border="1">
+        <tr>
+            <th>UID</th>
+            <th>Entry Date</th>
+            <th>Entry Time</th>
+            <th>Exit Date</th>
+            <th>Exit Time</th>
+            <th>Remarks</th>
+            <th>Due Date</th>
+            <th>Action</th>
+        </tr>
+
+        {% for record in records %}
+        <tr>
+            <form method="POST" action="/edit">
+                <td>{{ record.uid }}</td>
+                <td>{{ record.entry_date }}</td>
+                <td>{{ record.entry_time }}</td>
+                <td>{{ record.exit_date }}</td>
+                <td>{{ record.exit_time }}</td>
+                <td>
+                    <input type="text" name="remarks" value="{{ record.remarks }}">
+                </td>
+                <td>
+                    <input type="date" name="due_date" value="{{ record.due_date }}">
+                </td>
+                <td>
+                    <input type="hidden" name="uid" value="{{ record.uid }}">
+                    <button type="submit">Save</button>
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
